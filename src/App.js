@@ -1,24 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import Sidebar from './components/Sidebar';
+import Home from './components/Home';
+import About from './components/About';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
 
 function App() {
+
+  const pageVariants = {
+    initial: {
+      opacity: 0,
+      y: "-100vh",
+    },
+    in: {
+      opacity: 1,
+      y: 0,
+    },
+    out: {
+      opacity: 0,
+      y: "100vh",
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className='wrapper'>
+        <Sidebar />
+        <AnimatePresence>
+          <Switch>
+            <Route path='/about' render={() => <About vars={pageVariants} />}></Route>
+            <Route path='/' render={() => <Home vars={pageVariants} />}></Route>
+          </Switch>
+        </AnimatePresence>
+      </div>
+    </Router>
   );
 }
 
